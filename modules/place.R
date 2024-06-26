@@ -66,6 +66,13 @@ place_server <- function(id, place_type) {
                                 x = "grouping", y = "share", fill="geography", tog = "year", 
                                 dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
     
+    output$income_chart <- renderEcharts4r({
+      echart_multi_column_chart(df = income_data %>% 
+                                  filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total"),
+                                x = "grouping", y = "share", fill="geography", tog = "year", 
+                                dec = 0, esttype = "percent", color = "jewel", left_align = '15%')
+    })
+    
     # Tab layout
     output$place <- renderUI({
       tagList(
@@ -142,7 +149,17 @@ place_server <- function(id, place_type) {
                              
                              ),
                     
-                    tabPanel("Jobs", "Coming Soon"),
+                    tabPanel("Jobs", 
+                             
+                             # Income
+                             br(),
+                             strong(tags$div(class="chart_title","Share of Total Households by Household Income")),
+                             fluidRow(column(12, echarts4rOutput(ns("income_chart")))),
+                             br(),
+                             tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B19001"),
+                             br()
+                             
+                            ),
                     
                     tabPanel("Transportation", "Coming Soon")),
         

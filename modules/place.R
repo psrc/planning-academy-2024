@@ -22,6 +22,13 @@ place_server <- function(id, place_type) {
     # Charts & Maps
     output$map <- renderLeaflet(create_place_map(place_name=input$place_name, place_type=place_type))
     
+    output$pop_chart <- renderEcharts4r({
+      create_bar_chart(df = pop_hh_hu_data |> 
+                         filter(geography %in% c(input$place_name) & grouping == "Population") |>
+                         arrange(desc(year)),
+                       x = "year", y = "estimate", fill = "geography", toggle = "grouping", dec = -1,
+                       color = c("#8CC63E", "#F05A28", "#91268F"), legend = TRUE, left_align='15%')})
+    
     output$race_chart <- renderEcharts4r({
       echart_multi_bar_chart(df = race_data |> 
                                filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total") |>
@@ -40,6 +47,13 @@ place_server <- function(id, place_type) {
                                filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total"),
                              x = "grouping", y = "share", fill="geography", tog = "year", 
                              dec = 0, esttype = "percent", color = "jewel", left_align = '20%')})
+    
+    output$housing_chart <- renderEcharts4r({
+      create_bar_chart(df = pop_hh_hu_data |> 
+                         filter(geography %in% c(input$place_name) & grouping != "Population") |>
+                         arrange(desc(year)),
+                       x = "year", y = "estimate", fill = "geography", toggle = "grouping", dec = -1,
+                       color = c("#8CC63E", "#F05A28", "#91268F"), legend = TRUE, left_align='15%')})
     
     output$tenure_chart <- renderEcharts4r({
       echart_multi_column_chart(df = tenure_data |> 
@@ -82,7 +96,7 @@ place_server <- function(id, place_type) {
     output$place <- renderUI({
       tagList(
         br(),
-        fluidRow(column(12, selectInput(ns("place_name"), label="Select Geography:", choices=place_list, selected = random_place))),
+        fluidRow(column(12, selectInput(ns("place_name"), label="Select Geography:", choices=place_list, selected = random_place, width = '100%'))),
         fluidRow(column(6, leafletOutput(ns("map"))),
                  column(6, strong("Description:"),
                         br(),
@@ -91,6 +105,14 @@ place_server <- function(id, place_type) {
         
         tabsetPanel(type = "pills",
                     tabPanel("People", 
+                             
+                             # Total Population
+                             br(),
+                             strong(tags$div(class="chart_title","Total Population")),
+                             fluidRow(column(12, echarts4rOutput(ns("pop_chart")))),
+                             br(),
+                             tags$div(class="chart_source","Source: Office of Financial Managment SAEP Program & PSRC Parcelization"),
+                             br(),
                              
                              # Race
                              br(),
@@ -119,6 +141,14 @@ place_server <- function(id, place_type) {
                              ),
                     
                     tabPanel("Housing", 
+                             
+                             # Total Housing
+                             br(),
+                             strong(tags$div(class="chart_title","Total Households & Housing Units")),
+                             fluidRow(column(12, echarts4rOutput(ns("housing_chart")))),
+                             br(),
+                             tags$div(class="chart_source","Source: Office of Financial Managment SAEP Program & PSRC Parcelization"),
+                             br(),
                              
                              # Housing Tenure
                              br(),

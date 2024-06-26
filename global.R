@@ -53,6 +53,7 @@ year_ord <- c("2022", "2017", "2012")
 
 # Data via RDS files ------------------------------------------------------
 
+pop_hh_hu_data <- readRDS("data/population-housing.rds") |> mutate(year = factor(year, levels=year_ord))
 age_data <- readRDS("data/population_by_age.rds") |> mutate(year = factor(year, levels=year_ord))
 race_data <- readRDS("data/population_by_race.rds") |> mutate(year = factor(year, levels=year_ord))
 income_data <- readRDS("data/households_by_income.rds") |> mutate(year = factor(year, levels=year_ord))
@@ -77,3 +78,4 @@ transit_links <- c("Community Transit" = "https://www.communitytransit.org/",
                    "Washington State Ferries" = "https://wsdot.wa.gov/travel/washington-state-ferries",
                    "Transit Planning at PSRC" = "https://www.psrc.org/our-work/transit"
 )
+

@@ -20,8 +20,8 @@ left_panel_ui <- function(id) {
         class = "m-menu__title"),
     
     div(a(class = "source_url left-panel-url", 
-          href = "https://www.transit.dot.gov/ntd/ntd-data", 
-          "National Transit Database", 
+          href = "https://psrc-psregcncl.hub.arcgis.com/", 
+          "PSRC Data Portal", 
           target="_blank"),
         class = "focus",
         tabindex="0"),

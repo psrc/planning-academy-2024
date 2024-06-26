@@ -41,8 +41,31 @@ place_server <- function(id, place_type) {
                              x = "grouping", y = "share", fill="geography", tog = "year", 
                              dec = 0, esttype = "percent", color = "jewel", left_align = '20%')})
     
+    output$tenure_chart <- renderEcharts4r({
+      echart_multi_column_chart(df = tenure_data |> 
+                                  filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total"),
+                                x = "grouping", y = "share", fill="geography", tog = "year", 
+                                dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
     
-
+    output$type_chart <- renderEcharts4r({
+      echart_multi_bar_chart(df = type_data |>
+                               filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total") |>
+                               arrange(desc(grouping)),
+                             x = "grouping", y = "share", fill="geography", tog = "year", 
+                             dec = 0, esttype = "percent", color = "jewel", left_align = '20%')})
+    
+    output$renter_burden_chart <- renderEcharts4r({
+      echart_multi_column_chart(df = burden_data |>
+                                  filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total" & concept == "Renter Cost Burden"),
+                                x = "grouping", y = "share", fill="geography", tog = "year", 
+                                dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
+    
+    output$owner_burden_chart <- renderEcharts4r({
+      echart_multi_column_chart(df = burden_data |>
+                                  filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total" & concept == "Owner Cost Burden"),
+                                x = "grouping", y = "share", fill="geography", tog = "year", 
+                                dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
+    
     # Tab layout
     output$place <- renderUI({
       tagList(
@@ -79,7 +102,43 @@ place_server <- function(id, place_type) {
                              fluidRow(column(12, echarts4rOutput(ns("education_chart"), height=500))),
                              br(),
                              tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B15002"),
+                             br()
+                             
+                             ),
+                    
+                    tabPanel("Housing", 
+                             
+                             # Housing Tenure
                              br(),
+                             strong(tags$div(class="chart_title","Share of Households by Housing Tenure")),
+                             fluidRow(column(12, echarts4rOutput(ns("tenure_chart")))),
+                             br(),
+                             tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B25003"),
+                             br(),
+                             
+                             # Housing Unit Type
+                             br(),
+                             strong(tags$div(class="chart_title","Share of Households by Housing Unit Type")),
+                             fluidRow(column(12, echarts4rOutput(ns("type_chart"), height=500))),
+                             br(),
+                             tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B25024"),
+                             br(),
+                             
+                             # Renter Cost Burden
+                             br(),
+                             strong(tags$div(class="chart_title","Share of Renter Households by Cost Burden")),
+                             fluidRow(column(12, echarts4rOutput(ns("renter_burden_chart")))),
+                             br(),
+                             tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B25070"),
+                             br(),
+                             
+                             # Owner Cost Burden
+                             br(),
+                             strong(tags$div(class="chart_title","Share of Owner Households by Cost Burden")),
+                             fluidRow(column(12, echarts4rOutput(ns("owner_burden_chart")))),
+                             br(),
+                             tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B25091"),
+                             br()
                              
                              ),
                     

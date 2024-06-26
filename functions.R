@@ -326,7 +326,7 @@ pull_place_information <- function(place_name, place_type, place_info) {
   
 }
 
-echart_multi_column_chart <- function(df, x, y, fill, tog, dec, esttype, color) {
+echart_multi_column_chart <- function(df, x, y, fill, tog, dec, esttype, color, left_align='20%') {
   
   if (color == "blues") {chart_color <- psrcplot::psrc_colors$blues_inc}
   if (color == "greens") {chart_color <- psrcplot::psrc_colors$greens_inc}
@@ -370,7 +370,7 @@ echart_multi_column_chart <- function(df, x, y, fill, tog, dec, esttype, color) 
   
   c <- c %>% 
     echarts4r::e_color(chart_color) %>%
-    echarts4r::e_grid(left = '15%', top = top_padding, bottom = bottom_padding) %>%
+    echarts4r::e_grid(left = left_align, top = top_padding, bottom = bottom_padding) %>%
     echarts4r::e_x_axis(axisTick=list(show = FALSE)) %>%
     echarts4r::e_show_loading() %>%
     echarts4r::e_legend(show = TRUE, bottom=0)
@@ -444,6 +444,17 @@ echart_multi_column_chart <- function(df, x, y, fill, tog, dec, esttype, color) 
     c <- c %>%
       echarts4r::e_tooltip(trigger = "item")
   }
+  
+  return(c)
+  
+}
+
+echart_multi_bar_chart <- function(df, x, y, fill, tog, dec, esttype, color, left_align = '20%') {
+  
+  c <- echart_multi_column_chart(df=df, x=x, y=y, fill=fill, tog=tog, dec=dec, esttype=esttype, color=color, left_align=left_align) 
+  
+  c <- c %>%
+    e_flip_coords()
   
   return(c)
   

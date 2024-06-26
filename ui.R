@@ -33,8 +33,8 @@ shinyUI(
       fluidRow(column(12, style='padding-left:25px; padding-right:50px;',
                       tabsetPanel(type = "pills",
                                   tabPanel("Overview", overview_ui('OVERVIEW')),
-                                  tabPanel("Regional Growth Centers", rgc_ui('RGC')),
-                                  tabPanel("Planning Academy Schools", spa_ui('SPA')))
+                                  tabPanel("RGC", place_ui('RGC')),
+                                  tabPanel("SPA", place_ui('SPA')))
       )) # end of fluid row for Transit tab
     ), # End of mainPanel
     

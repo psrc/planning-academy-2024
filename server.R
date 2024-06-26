@@ -11,9 +11,9 @@ shinyServer(function(input, output) {
   overview_server('OVERVIEW')
   
   # Regional NTD metrics
-  rgc_server('RGC')
+  place_server('RGC', place_type = rgc_title)
   
   # Regional NTD metrics by Mode
-  spa_server('SPA')
+  place_server('SPA', place_type = school_title)
   
 })    

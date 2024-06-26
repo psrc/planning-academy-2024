@@ -64,16 +64,12 @@ type_data <- readRDS("data/housing_units_by_type.rds") |> mutate(year = factor(y
 burden_data <- readRDS("data/cost_burden.rds") |> mutate(year = factor(year, levels=year_ord))
 renter_burden_data <- burden_data |> filter(concept == "Renter Cost Burden")
 owner_burden_data <- burden_data |> filter(concept == "Owner Cost Burden")
-rgc_shape <- readRDS("data/rgc_shape.rds") |> st_transform(wgs84)
-school_shape <- readRDS("data/school_shape.rds") |> st_transform(wgs84)
+rgc_shape <- readRDS("data/rgc_shape.rds") |> st_transform(wgs84) |> rename(geometry="Shape") |> mutate(geography_type = rgc_title)
+school_shape <- readRDS("data/school_shape.rds") |> st_transform(wgs84) |> mutate(geography_type = school_title)
+place_shape <- bind_rows(rgc_shape, school_shape)
 
 # Values for Drop Downs ---------------------------------------------------
 # Section for creating the values needed in any dropdowns, lists, etc.
-rgc_list <- as.character(unique(rgc_shape$name)) |> sort()
-random_rgc <- rgc_list[[sample(1:length(rgc_list), 1)]]
-
-school_list <- as.character(unique(school_shape$name)) |> sort()
-random_school <- school_list[[sample(1:length(school_list), 1)]]
 
 # Other ----
 transit_links <- c("Community Transit" = "https://www.communitytransit.org/",

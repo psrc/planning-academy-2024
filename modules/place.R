@@ -67,11 +67,16 @@ place_server <- function(id, place_type) {
                                 dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
     
     output$income_chart <- renderEcharts4r({
-      echart_multi_column_chart(df = income_data %>% 
+      echart_multi_column_chart(df = income_data |> 
                                   filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total"),
                                 x = "grouping", y = "share", fill="geography", tog = "year", 
-                                dec = 0, esttype = "percent", color = "jewel", left_align = '15%')
-    })
+                                dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
+    
+    output$resident_mode_chart <- renderEcharts4r({
+      echart_multi_column_chart(df = mode_data |> 
+                                  filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total"),
+                                  x = "grouping", y = "share", fill="geography", tog = "year", 
+                                  dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
     
     # Tab layout
     output$place <- renderUI({
@@ -149,7 +154,7 @@ place_server <- function(id, place_type) {
                              
                              ),
                     
-                    tabPanel("Jobs", 
+                    tabPanel("Jobs & Income", 
                              
                              # Income
                              br(),
@@ -161,7 +166,18 @@ place_server <- function(id, place_type) {
                              
                             ),
                     
-                    tabPanel("Transportation", "Coming Soon")),
+                    tabPanel("Transportation", 
+                             
+                             # Mode to work
+                             br(),
+                             strong(tags$div(class="chart_title","Mode to Work for people 16+")),
+                             fluidRow(column(12, echarts4rOutput(ns("resident_mode_chart")))),
+                             br(),
+                             tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B08301"),
+                             br()
+                             
+                             )
+                    ),
         
         
         hr(style = "border-top: 1px solid #000000;")

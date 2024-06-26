@@ -60,6 +60,7 @@ education_data <- readRDS("data/educational_attainment.rds") |> mutate(year = fa
 tenure_data <- readRDS("data/households_by_tenure.rds") |> mutate(year = factor(year, levels=year_ord))
 type_data <- readRDS("data/housing_units_by_type.rds") |> mutate(year = factor(year, levels=year_ord))
 burden_data <- readRDS("data/cost_burden.rds") |> mutate(year = factor(year, levels=year_ord))
+mode_data <- readRDS("data/mode_to_work.rds") |> mutate(year = factor(year, levels=year_ord))
 rgc_shape <- readRDS("data/rgc_shape.rds") |> st_transform(wgs84) |> rename(geometry="Shape") |> mutate(geography_type = rgc_title)
 school_shape <- readRDS("data/school_shape.rds") |> st_transform(wgs84) |> mutate(geography_type = school_title)
 place_shape <- bind_rows(rgc_shape, school_shape)

@@ -39,6 +39,7 @@ source("functions.R")
 left_panel_info <- read_csv("data/left_panel_information.csv", show_col_types = FALSE)
 page_text <- read_csv("data/page_text.csv", show_col_types = FALSE)
 place_information <- read_csv("data/place_information.csv", show_col_types = FALSE)
+glossary_text <- read_csv("data/glossary_of_terms.csv", show_col_types = FALSE)
 
 # Inputs ---------------------------------------------------------------
 

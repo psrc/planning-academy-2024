@@ -459,3 +459,51 @@ echart_multi_bar_chart <- function(df, x, y, fill, tog, dec, esttype, color, lef
   return(c)
   
 }
+
+create_source_table <- function(d=glossary_text) {
+  
+  # Table with Titles as first row
+  t <- rbind(names(d), d)
+  
+  headerCallbackRemoveHeaderFooter <- c(
+    "function(thead, data, start, end, display){",
+    "  $('th', thead).css('display', 'none');",
+    "}"
+  )
+  
+  summary_tbl <- datatable(t,
+                           options = list(paging = FALSE,
+                                          pageLength = 30,
+                                          searching = FALSE,
+                                          dom = 't',
+                                          headerCallback = JS(headerCallbackRemoveHeaderFooter),
+                                          columnDefs = list(list(targets = c(0,2), className = 'dt-left'))),
+                           selection = 'none',
+                           callback = JS(
+                             "$('table.dataTable.no-footer').css('border-bottom', 'none');"
+                           ),
+                           class = 'row-border',
+                           filter = 'none',              
+                           rownames = FALSE,
+                           escape = FALSE
+  ) 
+  
+  # # Add Section Breaks
+  # 
+  # summary_tbl <- summary_tbl %>%
+  #   formatStyle(0:ncol(t), valueColumns = "Data Point",
+  #               `border-bottom` = styleEqual(c("Work from Home: City", 
+  #                                              "Traffic Related Deaths and Serious Injuries: Day of Week", 
+  #                                              "Population, Housing Units and Jobs: Near High Capacity Transit",
+  #                                              "Transit Mode to Work: City",
+  #                                              "Bike to Work: City",
+  #                                              "Departure Time to Work: Metro Areas"), "solid 2px"))
+  # 
+  # summary_tbl <- summary_tbl %>%
+  #   formatStyle(0:ncol(t), valueColumns = "Data Point",
+  #               `border-top` = styleEqual(c("Vehicle Registrations: Region"), "solid 2px"))
+  
+  return(summary_tbl)
+  
+}
+

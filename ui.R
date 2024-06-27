@@ -34,7 +34,8 @@ shinyUI(
                       tabsetPanel(type = "pills",
                                   tabPanel("Overview", overview_ui('OVERVIEW')),
                                   tabPanel("Centers", place_ui('RGC')),
-                                  tabPanel("Schools", place_ui('SPA')))
+                                  tabPanel("Schools", place_ui('SPA')),
+                                  tabPanel("Definitions", hr(style = "border-top: 1px solid #000000;"), glossary_ui('GLOSSARY'), hr(style = "border-top: 1px solid #000000;")))
       )) # end of fluid row for Transit tab
     ), # End of mainPanel
     

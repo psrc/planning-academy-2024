@@ -22,6 +22,8 @@ place_server <- function(id, place_type) {
     # Charts & Maps
     output$map <- renderLeaflet(create_place_map(place_name=input$place_name, place_type=place_type))
     
+    output$summary_table <- renderDataTable(create_summary_table(place_name=input$place_name, place_type = place_type))
+    
     output$pop_chart <- renderEcharts4r({
       create_bar_chart(df = pop_hh_hu_data |> 
                          filter(geography %in% c(input$place_name) & grouping == "Population") |>
@@ -107,7 +109,11 @@ place_server <- function(id, place_type) {
         br(),
         fluidRow(column(12, selectInput(ns("place_name"), label="Select Geography:", choices=place_list, selected = random_place, width = '100%'))),
         fluidRow(column(6, leafletOutput(ns("map"))),
-                 column(6, strong("Description:"),
+                 column(6, strong("Summary Statistics"),
+                        br(),
+                        dataTableOutput(ns("summary_table")))),
+        br(),
+        fluidRow(column(12, strong("Description:"),
                         br(),
                         textOutput(ns("description")))),
         hr(style = "border-top: 1px solid #000000;"),

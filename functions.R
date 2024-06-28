@@ -558,3 +558,56 @@ create_jobs_by_sector_table <- function(place_name, place_type) {
   
 }
 
+create_summary_table <- function(df = summary_data, place_name, place_type) {
+  
+  t <- df |> 
+    filter(geography == place_name & geography_type == place_type) |>
+    mutate(pic = case_when(
+      grouping == "Land Area (acres)" ~ as.character(icon("layer-group", lib = "font-awesome")),
+      grouping == "Year" ~ as.character(icon("calendar-check", lib = "font-awesome")),
+      grouping == "Category" ~ as.character(icon("city", lib = "font-awesome")),
+      grouping == "Population" ~ as.character(icon("users", lib = "font-awesome")),
+      grouping == "Housing Units" ~ as.character(icon("building", lib = "font-awesome")),
+      grouping == "Total Employment" ~ as.character(icon("briefcase", lib = "font-awesome")),
+      grouping == "Activity Units per Acre" ~ as.character(icon("people-group", lib = "font-awesome")),
+      grouping == "Jobs per Resident" ~ as.character(icon("person-shelter", lib = "font-awesome")))) |>
+    select("pic", "grouping", "estimate")
+
+    
+  headerCallbackRemoveHeaderFooter <- c(
+    "function(thead, data, start, end, display){",
+    "  $('th', thead).css('display', 'none');",
+    "}"
+  )
+  
+  summary_tbl <- datatable(t,
+                           options = list(paging = FALSE,
+                                          pageLength = 15,
+                                          searching = FALSE,
+                                          dom = 't',
+                                          headerCallback = JS(headerCallbackRemoveHeaderFooter),
+                                          columnDefs = list(list(targets = c(2), className = 'dt-right'),
+                                                            list(targets = c(0), className = 'dt-center'))),
+                           selection = 'none',
+                           callback = JS(
+                             "$('table.dataTable.no-footer').css('border-bottom', 'none');"
+                           ),
+                           class = 'row-border',
+                           filter = 'none',              
+                           rownames = FALSE,
+                           escape = FALSE
+  ) 
+  
+  # Add Section Breaks
+  summary_tbl <- summary_tbl %>%
+    formatStyle(0:ncol(t), valueColumns = "grouping",
+                `border-bottom` = styleEqual(c("Category", "Total Employment", "Jobs per Resident"), "solid 2px"))
+  
+  summary_tbl <- summary_tbl %>%
+    formatStyle(0:ncol(t), valueColumns = "grouping",
+                `border-top` = styleEqual(c("Land Area (acres)"), "solid 2px"))
+  
+  return(summary_tbl)
+  
+}
+

@@ -27,7 +27,7 @@ spn <- 2285
 
 # Silence the dplyr summarize message
 options(dplyr.summarise.inform = FALSE)
-acs_pre2013_bg_dir <- "C:/coding/acs_blockgroups_pre2013"
+acs_pre2013_bg_dir <- "X:/DSA/shiny-uploads/acs_blockgroups_pre2013"
 
 # Factor Levels
 county_order <- c("Region", "King County", "Kitsap County", "Pierce County", "Snohomish County")
@@ -84,7 +84,7 @@ rgc_names <- rgc_shape |>
 saveRDS(rgc_shape, "data/rgc_shape.rds")
 
 # School Shapefiles -------------------------------------------------------
-school_shape <- st_read("data/summer_planning_academy_schools.shp") |> 
+school_shape <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools.shp") |> 
   st_transform(spn) 
 
 school_shape <- school_shape |>

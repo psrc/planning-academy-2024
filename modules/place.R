@@ -80,6 +80,15 @@ place_server <- function(id, place_type) {
                                 x = "grouping", y = "share", fill="geography", tog = "year", 
                                 dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
     
+    output$job_chart <- renderEcharts4r({
+      create_bar_chart(df = jobs_data |> 
+                         filter(geography %in% c(input$place_name) & grouping == "Total") |>
+                         arrange(desc(year)),
+                       x = "year", y = "estimate", fill = "geography", toggle = "grouping", dec = -1,
+                       color = c("#8CC63E", "#F05A28", "#91268F"), legend = TRUE, left_align='15%')})
+    
+    output$job_sector_table <- renderDataTable(create_jobs_by_sector_table(place_name = input$place_name, place_type = place_type))
+    
     output$income_chart <- renderEcharts4r({
       echart_multi_column_chart(df = income_data |> 
                                   filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total"),
@@ -185,6 +194,17 @@ place_server <- function(id, place_type) {
                              ),
                     
                     tabPanel("Jobs & Income", 
+                             
+                             # Total Jobs
+                             br(),
+                             strong(tags$div(class="chart_title","Total Jobs")),
+                             fluidRow(column(6, echarts4rOutput(ns("job_chart"), height = 500)),
+                                      column(6, strong("Jobs by Sector"),
+                                             br(),
+                                             dataTableOutput(ns("job_sector_table")))),
+                             br(),
+                             tags$div(class="chart_source","Source: US Census Bureau LEHD Origin-Destination Employment Statistics (LODES)"),
+                             br(),
                              
                              # Income
                              br(),

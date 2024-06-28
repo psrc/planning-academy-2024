@@ -21,6 +21,7 @@ library(leaflet)
 
 # Packages for Table Creation
 library(DT)
+library(scales)
 
 # Package for Excel Data Creation
 library(openxlsx)
@@ -50,7 +51,7 @@ latest_yr <- "2023"
 rgc_title <- "Regional Growth Center (4/23/2024)"
 school_title <- "Planning Academy School 2024"
 
-year_ord <- c("2022", "2017", "2012")
+year_ord <- c("2022", "2021", "2017", "2012")
 
 # Data via RDS files ------------------------------------------------------
 
@@ -63,6 +64,7 @@ tenure_data <- readRDS("data/households_by_tenure.rds") |> mutate(year = factor(
 type_data <- readRDS("data/housing_units_by_type.rds") |> mutate(year = factor(year, levels=year_ord))
 burden_data <- readRDS("data/cost_burden.rds") |> mutate(year = factor(year, levels=year_ord))
 mode_data <- readRDS("data/mode_to_work.rds") |> mutate(year = factor(year, levels=year_ord))
+jobs_data <- readRDS("data/jobs_data.rds") |> mutate(year = factor(year, levels=year_ord))
 rgc_shape <- readRDS("data/rgc_shape.rds") |> st_transform(wgs84) |> rename(geometry="Shape") |> mutate(geography_type = rgc_title)
 school_shape <- readRDS("data/school_shape.rds") |> st_transform(wgs84) |> mutate(geography_type = school_title)
 place_shape <- bind_rows(rgc_shape, school_shape)

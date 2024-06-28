@@ -507,3 +507,54 @@ create_source_table <- function(d=glossary_text) {
   
 }
 
+create_jobs_by_sector_table <- function(place_name, place_type) {
+  
+  sectors <- jobs_data |> select("grouping") |> distinct() |> pull()
+  data <- jobs_data |> filter(geography == place_name & geography_type == place_type) |> mutate(year = as.integer(as.character(year)))
+  max_year <- max(data$year)
+  
+  # Jobs by Sector
+  t <- data |>
+    filter(year == max_year) |>
+    select("grouping","estimate", "share") |>
+    mutate(estimate = format(estimate, big.mark = ",")) |>
+    mutate(share = round(share, 4)) |>
+    mutate(share = label_percent(accuracy=1)(share))
+  
+  headerCallbackRemoveHeaderFooter <- c(
+    "function(thead, data, start, end, display){",
+    "  $('th', thead).css('display', 'none');",
+    "}"
+  )
+  
+  summary_tbl <- datatable(t,
+                           options = list(paging = FALSE,
+                                          pageLength = 15,
+                                          searching = FALSE,
+                                          dom = 't',
+                                          headerCallback = JS(headerCallbackRemoveHeaderFooter),
+                                          columnDefs = list(list(targets = c(1,2), className = 'dt-right'),
+                                                            list(targets = c(0), className = 'dt-left'))),
+                           selection = 'none',
+                           callback = JS(
+                             "$('table.dataTable.no-footer').css('border-bottom', 'none');"
+                           ),
+                           class = 'row-border',
+                           filter = 'none',              
+                           rownames = FALSE,
+                           escape = FALSE
+  ) 
+  
+  # Add Section Breaks
+  summary_tbl <- summary_tbl %>%
+    formatStyle(0:ncol(t), valueColumns = "grouping",
+                `border-bottom` = styleEqual(c("Total"), "solid 2px"))
+  
+  summary_tbl <- summary_tbl %>%
+    formatStyle(0:ncol(t), valueColumns = "grouping",
+                `border-top` = styleEqual(c("Construction / Resources"), "solid 2px"))
+  
+  return(summary_tbl)
+  
+}
+

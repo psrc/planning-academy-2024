@@ -84,7 +84,7 @@ rgc_names <- rgc_shape |>
 saveRDS(rgc_shape, "data/rgc_shape.rds")
 
 # School Shapefiles -------------------------------------------------------
-school_shape <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools.shp") |> 
+school_shape <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools_v2.shp") |> 
   st_transform(spn) 
 
 school_shape <- school_shape |>

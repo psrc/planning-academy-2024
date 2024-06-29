@@ -36,7 +36,7 @@ blockgroup_splits <- blockgroup_splits |>
 
 # Step #1: Read in School layer
 print(str_glue("Reading in layer of Summer Planning Acadmey School Boundaries"))
-schools <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools.shp") |> st_transform(spn)
+schools <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools_v2.shp") |> st_transform(spn)
 
 # Step #2: Read in 2010 Blockgroups Layer
 print(str_glue("Reading in 2010 Blockgroups"))

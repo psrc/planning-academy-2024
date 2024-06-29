@@ -43,7 +43,7 @@ rgc_names <- rgc_shape |>
   sort()
 
 # School Shapefile --------------------------------------------------------
-schools <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools.shp") |> st_transform(spn)
+schools <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools_v2.shp") |> st_transform(spn)
 
 school_names <- schools |> 
   select("school") |> 

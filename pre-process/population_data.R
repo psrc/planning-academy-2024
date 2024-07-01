@@ -110,7 +110,7 @@ rm(region)
 
 # Population data by Planning Academy Schools --------------------------
 print(str_glue("Reading in layer of Summer Planning Acadmey School Boundaries"))
-schools <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools_v2.shp") |> st_transform(spn)
+schools <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_academy_schools.shp") |> st_transform(spn)
 
 school_names <- schools |> 
   select("school") |> 

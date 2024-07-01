@@ -12,7 +12,20 @@ place_server <- function(id, place_type) {
     ns <- session$ns
     
     # Place based inputs
-    place_list <- place_shape |> st_drop_geometry() |> filter(geography_type == place_type)  |> select("name") |> distinct() |> pull() |> sort()
+    places <- place_shape |> st_drop_geometry() |> filter(geography_type == place_type)
+
+    place_list <- NULL
+    for (c in unique(places$category)) {
+      
+      # Names associated with category
+      nms <- places |> select("name", "category") |> filter(category == c) |> select("name") |> pull() |> unique()
+      i <- list(nms)
+      names(i) <- c
+      
+      if(is.null(place_list)) {place_list <- i} else {place_list <- append(place_list, i)}
+      
+    }
+    
     random_place <- place_list[[sample(1:length(place_list), 1)]]
     if (place_type == rgc_title) {all_places <- "All RGCs"} else {all_places <- "All Schools"}
     

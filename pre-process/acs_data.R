@@ -72,7 +72,8 @@ rgc_shape <- st_read_elmergeo(layer_name = "urban_centers") |>
   mutate(name = gsub("Bellevue", "Bellevue Downtown", name)) |>
   mutate(name = gsub("Redmond-Overlake", "Redmond Overlake", name)) |>
   mutate(name = gsub("Greater Downtown Kirkland", "Kirkland Greater Downtown", name)) |>
-  select("name", "category", "acres")
+  select("name", "category", "acres") |>
+  arrange(name)
 
 rgc_names <- rgc_shape |> 
   select("name") |> 
@@ -89,7 +90,8 @@ school_shape <- st_read("X:/DSA/shiny-uploads/planning-academy/summer_planning_a
 
 school_shape <- school_shape |>
   mutate(acres = as.numeric(set_units(st_area(school_shape), "acre"))) |>
-  select(name = "school", category = "district", "acres")
+  select(name = "school", category = "district", "acres") |>
+  arrange(category, name)
 
 school_names <- school_shape |> 
   select("name") |> 

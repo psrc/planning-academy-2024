@@ -27,6 +27,13 @@ left_panel_ui <- function(id) {
         tabindex="0"),
     
     div(a(class = "source_url left-panel-url", 
+          href = "https://experience.arcgis.com/experience/a587d27d1c444a6e891fe1b58508622d", 
+          "PSRC Transportation Visualization Tool", 
+          target="_blank"),
+        class = "focus",
+        tabindex="0"),
+    
+    div(a(class = "source_url left-panel-url", 
           "Transit Planning at PSRC",
           href = "https://www.psrc.org/our-work/transit",
           target = "_blank"),

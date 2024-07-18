@@ -116,6 +116,12 @@ place_server <- function(id, place_type) {
                                   x = "grouping", y = "share", fill="geography", tog = "year", 
                                   dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
     
+    output$resident_vehicles_chart <- renderEcharts4r({
+      echart_multi_column_chart(df = vehicles_data |> 
+                                  filter(geography %in% c(input$place_name, "Region", all_places) & grouping != "Total"),
+                                x = "grouping", y = "share", fill="geography", tog = "year", 
+                                dec = 0, esttype = "percent", color = "jewel", left_align = '15%')})
+    
     # Tab layout
     output$place <- renderUI({
       tagList(
@@ -243,7 +249,16 @@ place_server <- function(id, place_type) {
                              fluidRow(column(12, echarts4rOutput(ns("resident_mode_chart")))),
                              br(),
                              tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B08301"),
+                             br(),
+                             
+                             # Vehicle Availability by Household
+                             br(),
+                             strong(tags$div(class="chart_title","Vehicle Availability by Household")),
+                             fluidRow(column(12, echarts4rOutput(ns("resident_vehicles_chart")))),
+                             br(),
+                             tags$div(class="chart_source","Source: US Census Bureau American Community Survey (ACS) 5yr Data Table B08201"),
                              br()
+                             
                              
                              )
                     ),

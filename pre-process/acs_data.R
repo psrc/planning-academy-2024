@@ -11,6 +11,7 @@ source("functions.R")
 # Inputs ------------------------------------------------------------------
 
 blockgroup_splits <- readRDS("data/blockgroup_splits.rds")
+tract_splits <- readRDS("data/tract_splits.rds")
 
 # Data Years
 pre_api_years <- c(2012)
@@ -55,6 +56,8 @@ education_order <- c("No high school\ndiploma", "High school", "Some college",
 
 mode_order <- c("Drove\nAlone", "Carpooled", "Transit", "Bike", "Walk","Work from\nHome", "Other", "Total")
 
+vehicle_order <- c("No vehicles","1 vehicle", "2 vehicles", "3 vehicles", "4 or more vehicles", "Total")
+
 # Census Tables
 age_table <- "B01001"
 race_table <- "B03002"
@@ -65,6 +68,7 @@ renter_burden_table <- "B25070"
 owner_burden_table <- "B25091"
 education_table <- "B15002"
 mode_table <- "B08301"
+vehicle_table <- "B08201"
 
 # Center Shapefiles -------------------------------------------------------
 rgc_shape <- st_read_elmergeo(layer_name = "urban_centers") |>
@@ -1310,3 +1314,81 @@ ord <- unique(c(county_order, "All RGCs", rgc_names, "All Schools", school_names
 mode_to_work <- mode_to_work |> mutate(geography = factor(geography, levels = ord)) |> arrange(geography, grouping, year)
 saveRDS(mode_to_work, "data/mode_to_work.rds")
 rm(mode_lookup, places, blockgroups, county)
+
+# Vehicles Available --------------------------------------------------------
+vehicle_lookup <- data.frame(variable = c("B08201_001",
+                                          "B08201_002",
+                                          "B08201_003",
+                                          "B08201_004",
+                                          "B08201_005",
+                                          "B08201_006"),
+                             grouping = c("Total",
+                                          "No vehicles",
+                                          "1 vehicle", 
+                                          "2 vehicles", 
+                                          "3 vehicles", 
+                                          "4 or more vehicles"))
+
+# County
+county <- get_acs_recs(geography="county", table.names = vehicle_table, years = analysis_years, acs.type = 'acs5') 
+
+county <- left_join(county, vehicle_lookup, by=c("variable")) |>
+  filter(!(is.na(grouping))) |>
+  select(geography="name", "estimate", "moe", "year", "grouping") |>
+  group_by(geography, year, grouping) |>
+  summarise(estimate = sum(estimate)) |>
+  as_tibble() |>
+  mutate(concept = "Households by Vehicle Availability")
+
+totals <- county |> filter(grouping == "Total") |> select("geography", "year", "concept", total="estimate")
+
+county <- left_join(county, totals, by=c("geography", "year", "concept")) |>
+  mutate(share = estimate / total) |>
+  select(-"total") |>
+  mutate(geography_type = "County") |>
+  mutate(geography = factor(geography, levels = county_order)) |>
+  mutate(grouping = factor(grouping, levels = vehicle_order)) |>
+  mutate(year = as.character(year)) |>
+  arrange(geography, grouping, year)
+
+rm(totals)
+
+# Census Tracts
+tracts <- get_acs_recs(geography="tract", table.names = vehicle_table, years = analysis_years, acs.type = 'acs5') 
+
+tracts <- left_join(tracts, vehicle_lookup, by=c("variable")) |>
+  filter(!(is.na(grouping))) |>
+  select(geoid="GEOID", "estimate", "moe", "year", "grouping") |>
+  group_by(geoid, year, grouping) |>
+  summarise(estimate = sum(estimate)) |>
+  as_tibble() |>
+  mutate(concept = "Households by Vehicle Availability") |>
+  mutate(geography_type = "Tract") |>
+  mutate(grouping = factor(grouping, levels = vehicle_order)) |>
+  mutate(year = as.character(year)) |>
+  arrange(geoid, grouping, year)
+
+# Regional Growth Centers
+places <- NULL
+for(place in c(rgc_names, "All RGCs")) {
+  
+  df <- geography_estimate_from_bg(split_df=tract_splits, estimate_df=tracts, geography_type = rgc_title, split_type = "percent_of_occupied_housing_units", geography_name=place)
+  ifelse(is.null(places), places <- df, places <- bind_rows(places, df))
+  rm(df)
+  
+}
+
+# Planning Academy Schools
+for(place in c(school_names, "All Schools")) {
+  
+  df <- geography_estimate_from_bg(split_df=tract_splits, estimate_df=tracts, geography_type = school_title, split_type = "percent_of_occupied_housing_units", geography_name=place)
+  places <- bind_rows(places, df)
+  rm(df)
+  
+}
+
+households_by_vehicles <- bind_rows(county, places)
+ord <- unique(c(county_order, "All RGCs", rgc_names, "All Schools", school_names))
+households_by_vehicles <- households_by_vehicles |> mutate(geography = factor(geography, levels = ord)) |> arrange(geography, grouping, year)
+saveRDS(households_by_vehicles, "data/households_by_vehicles.rds")
+rm(vehicle_lookup, places, tracts, county)

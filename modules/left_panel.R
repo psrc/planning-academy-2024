@@ -16,22 +16,8 @@ left_panel_ui <- function(id) {
 
   tagList(
     
-    div("Resources",
+    div("Other Resources",
         class = "m-menu__title"),
-    
-    div(a(class = "source_url left-panel-url", 
-          href = "https://psrc-psregcncl.hub.arcgis.com/", 
-          "PSRC Data Portal", 
-          target="_blank"),
-        class = "focus",
-        tabindex="0"),
-    
-    div(a(class = "source_url left-panel-url", 
-          href = "https://experience.arcgis.com/experience/a587d27d1c444a6e891fe1b58508622d", 
-          "PSRC Transportation Visualization Tool", 
-          target="_blank"),
-        class = "focus",
-        tabindex="0"),
     
     div(a(class = "source_url left-panel-url", 
           "Transit Planning at PSRC",

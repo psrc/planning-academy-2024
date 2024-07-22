@@ -135,6 +135,12 @@ i {
   font-size: 22pt;
 }
 
+.quicklink_text {
+  color: #00716C;
+  font-family: "Poppins";
+  font-size: 1.125rem;
+}
+
 .footer_title {
   color: #FFFFFF;
   font-family: "Poppins";

@@ -39,6 +39,20 @@ i {
   padding-right: 25px;
 }
 
+.fas.fa-square-poll-vertical {
+ color: #00716C;
+  font-size: 36pt;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.fas.fa-book-atlas {
+ color: #00716C;
+  font-size: 36pt;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
 #mainpanel {
   background-color: white;
   padding-left: 10px;
@@ -141,6 +155,12 @@ i {
   font-size: 1.125rem;
 }
 
+.icon_text {
+  color: #00716C;
+  font-family: "Poppins";
+  font-size: 2rem;
+}
+
 .footer_title {
   color: #FFFFFF;
   font-family: "Poppins";
@@ -196,8 +216,6 @@ i {
   font-size: 18pt;
   color: #F05A28;
 }
-
-
 
 nav {
   font-size: 12pt;

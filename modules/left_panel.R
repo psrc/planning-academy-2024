@@ -9,27 +9,32 @@ left_panel_ui <- function(id) {
   cdf <- left_panel_info |> 
     select(starts_with('contact'))
   
-  links_withtags <- withTags(
-    map2(transit_links[1:8], names(transit_links)[1:8], 
+  transit_links_withtags <- withTags(
+    map2(transit_links[1:3], names(transit_links)[1:3], 
+         ~div(class = "links-container", tags$a(class = "links", href = .x, .y, tabindex="0", target = "_blank")))
+  )
+  
+  equity_links_withtags <- withTags(
+    map2(equity_links[1:3], names(equity_links)[1:3], 
          ~div(class = "links-container", tags$a(class = "links", href = .x, .y, tabindex="0", target = "_blank")))
   )
 
   tagList(
     
-    div("Other Resources",
+    div("Resources",
         class = "m-menu__title"),
     
-    div(a(class = "source_url left-panel-url", 
-          "Transit Planning at PSRC",
-          href = "https://www.psrc.org/our-work/transit",
-          target = "_blank"),
-        class = "focus",
-        tabindex="0"),
+    bsCollapse(id = "equity-collapse", 
+               open = NULL,
+               bsCollapsePanel("Equity Resources",
+                               equity_links_withtags
+               )
+    ),
     
     bsCollapse(id = "transit-collapse", 
                open = NULL,
-               bsCollapsePanel("Transit Agency Websites",
-                               links_withtags
+               bsCollapsePanel("Transit Resources",
+                               transit_links_withtags
                                )
                ),
     

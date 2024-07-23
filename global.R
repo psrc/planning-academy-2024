@@ -27,13 +27,10 @@ page_text <- read_csv("data/page_text.csv", show_col_types = FALSE)
 
 # Inputs ---------------------------------------------------------------
 
-transit_links <- c("Community Transit" = "https://www.communitytransit.org/",
-                   "Everett Transit" = "https://everetttransit.org/",
-                   "King County Metro" = "https://kingcounty.gov/en/dept/metro",
-                   "Kitsap Transit" = "https://www.kitsaptransit.com/",
-                   "Pierce Transit" = "https://www.piercetransit.org/",
-                   "Pierce County Ferry" = "https://www.piercecountywa.gov/1793/Ferry",
-                   "Sound Transit" = "https://www.soundtransit.org/",
-                   "Washington State Ferries" = "https://wsdot.wa.gov/travel/washington-state-ferries",
-                   "Transit Planning at PSRC" = "https://www.psrc.org/our-work/transit"
-)
+equity_links <- c("Equity Planning at PSRC" = "https://www.psrc.org/our-work/equity",
+                  "Equity Tracker" = "https://www.psrc.org/our-work/equity/equity-tracker",
+                  "Legacy of Structrual Racism" = "https://www.psrc.org/our-work/legacy-structural-racism")
+
+transit_links <- c("Transit Planning at PSRC" = "https://www.psrc.org/our-work/transit",
+                   "Transit Access" = "https://www.psrc.org/our-work/transit-access",
+                   "Transit Oriented Development" = "https://www.psrc.org/our-work/transit-oriented-development")

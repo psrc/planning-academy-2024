@@ -53,6 +53,20 @@ i {
   padding-right: 25px;
 }
 
+.fas.fa-tree-city {
+ color: #00716C;
+  font-size: 36pt;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.fas.fa-school {
+ color: #00716C;
+  font-size: 36pt;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
 #mainpanel {
   background-color: white;
   padding-left: 10px;

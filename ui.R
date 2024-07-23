@@ -34,12 +34,6 @@ shinyUI(
        
        fluidRow(column(12, style='padding-left:25px; padding-right:50px;', overview_ui('OVERVIEW'))),
        
-       # fluidRow(column(12, style='padding-left:25px; padding-right:50px;',
-       #                 tabsetPanel(type = "pills",
-       #                             #tabPanel("Centers", place_ui('RGC')),
-       #                             tabPanel("Schools", place_ui('SPA')),
-       #                             tabPanel("Definitions", hr(style = "border-top: 1px solid #000000;"), glossary_ui('GLOSSARY'), hr(style = "border-top: 1px solid #000000;")))
-       # )) # end of fluid row for Transit tab
      ), # End of mainPanel
     
   style = "margin-bottom: 2rem;"),# end of fluidRow

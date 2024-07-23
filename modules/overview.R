@@ -32,23 +32,25 @@ overview_server <- function(id) {
                  
                  column(6, align="center",
                         div(a(class = "source_url left-panel-url", 
-                              href = "https://experience.arcgis.com/experience/a587d27d1c444a6e891fe1b58508622d", 
-                              icon("book-atlas"), 
+                              href = "https://psrcwa.shinyapps.io/planning-academy-centers-2024/", 
+                              icon("tree-city"), 
                               target="_blank"),
                             class = "focus",
                             tabindex="0"))),
         
         fluidRow(column(6, align="center", strong(tags$div(class="icon_text","PSRC Data Portal"))),
-                 column(6, align="center", strong(tags$div(class="icon_text","PSRC Transportation Visualization Tool")))),
+                 column(6, align="center", strong(tags$div(class="icon_text","Regional Growth Centers")))),
+        
+        br(),
         
         fluidRow(column(6, align="center",
                         div(a(class = "source_url left-panel-url", 
-                              href = "https://psrcwa.shinyapps.io/planning-academy-centers-2024/", 
-                              icon("tree-city"), 
+                              href = "https://experience.arcgis.com/experience/a587d27d1c444a6e891fe1b58508622d", 
+                              icon("book-atlas"), 
                               target="_blank"),
                             class = "focus",
                             tabindex="0")),
-                 
+          
                  column(6, align="center",
                         div(a(class = "source_url left-panel-url", 
                               href = "https://psrcwa.shinyapps.io/planning-academy-schools-2024/", 
@@ -57,7 +59,7 @@ overview_server <- function(id) {
                             class = "focus",
                             tabindex="0"))),
         
-        fluidRow(column(6, align="center", strong(tags$div(class="icon_text","Regional Growth Centers"))),
+        fluidRow(column(6, align="center", strong(tags$div(class="icon_text","PSRC Transportation Visualization Tool"))),
                  column(6, align="center", strong(tags$div(class="icon_text","Optional School Data")))),
         
         br(),

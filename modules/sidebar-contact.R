@@ -9,7 +9,7 @@ contact_container_ui <- function(id, name, title, email, phone) {
             
             div(class = "contacts-details",
                 div(  
-                  div(p(paste(name, "-", title))),
+                  div(p(HTML(paste(name, "<br/>", title)))),
                   
                   div(class = "contacts-icons",
                       div(icon("envelope"),

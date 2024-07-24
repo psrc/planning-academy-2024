@@ -15,6 +15,13 @@ overview_server <- function(id) {
     output$overview1_text <- renderText({page_information(tbl=page_text, page_name="Overview", page_section = "Overview1", page_info = "description")})
     output$overview2_text <- renderText({page_information(tbl=page_text, page_name="Overview", page_section = "Overview2", page_info = "description")})
     
+    output$session_overview_text <- renderText({page_information(tbl=page_text, page_name="Overview", page_section = "Session Overview", page_info = "description")})
+    
+    output$session1_text <- renderText({page_information(tbl=page_text, page_name="Overview", page_section = "Session 1", page_info = "description")})
+    output$session2_text <- renderText({page_information(tbl=page_text, page_name="Overview", page_section = "Session 2", page_info = "description")})
+    output$session3_text <- renderText({page_information(tbl=page_text, page_name="Overview", page_section = "Session 3", page_info = "description")})
+    output$session4_text <- renderText({page_information(tbl=page_text, page_name="Overview", page_section = "Session 4", page_info = "description")})
+    
     # Overview UI
     output$overview <- renderUI({
       tagList(
@@ -65,6 +72,28 @@ overview_server <- function(id) {
         br(),
         textOutput(ns("overview2_text")),
         br(),
+        
+        h2("Additional Session Resources"),
+        
+        textOutput(ns("session_overview_text")),
+        br(),
+        
+        tabsetPanel(type = "pills",
+                    tabPanel("Session #1", 
+                             br(),
+                             textOutput(ns("session1_text")),
+                             br(),
+                             tags$a(class = "links", href = "https://www.psrc.org/media/7768", "Equity Impact Assessment", tabindex="0", target = "_blank")
+                             ),
+                    tabPanel("Session #2", 
+                             textOutput(ns("session2_text"))
+                    ),
+                    tabPanel("Session #3", 
+                             textOutput(ns("session3_text"))
+                    ),
+                    tabPanel("Session #4", 
+                             textOutput(ns("session4_text"))
+                    )),
         
       )
     })

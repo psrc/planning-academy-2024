@@ -33,8 +33,8 @@ equity_links <- c("Equity Planning at PSRC" = "https://www.psrc.org/our-work/equ
 
 transit_links <- c("Transit Planning at PSRC" = "https://www.psrc.org/our-work/transit",
                    "Transit Access" = "https://www.psrc.org/our-work/transit-access",
-                   "Transit Oriented Development" = "https://www.psrc.org/our-work/transit-oriented-development")
+                   "Development near Transit" = "https://www.psrc.org/our-work/transit-oriented-development")
 
 housing_links <- c("Regional Housing Strategy" = "https://www.psrc.org/our-work/regional-housing-strategy",
                    "Housing Incentives & Tools" = "https://www.psrc.org/our-work/housing-incentives-and-tools-survey",
-                   "Hosuing Innovations Program" = "https://www.psrc.org/our-work/housing-innovations-program-hip")
+                   "Housing Innovations" = "https://www.psrc.org/our-work/housing-innovations-program-hip")

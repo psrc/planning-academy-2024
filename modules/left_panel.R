@@ -18,6 +18,11 @@ left_panel_ui <- function(id) {
     map2(equity_links[1:3], names(equity_links)[1:3], 
          ~div(class = "links-container", tags$a(class = "links", href = .x, .y, tabindex="0", target = "_blank")))
   )
+  
+  housing_links_withtags <- withTags(
+    map2(housing_links[1:3], names(housing_links)[1:3], 
+         ~div(class = "links-container", tags$a(class = "links", href = .x, .y, tabindex="0", target = "_blank")))
+  )
 
   tagList(
     
@@ -37,6 +42,13 @@ left_panel_ui <- function(id) {
                                transit_links_withtags
                                )
                ),
+    
+    bsCollapse(id = "housing-collapse", 
+               open = NULL,
+               bsCollapsePanel("Housing Resources",
+                               housing_links_withtags
+               )
+    ),
     
     # Contact ----
     contact_container_ui('contact-data',

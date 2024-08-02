@@ -73,27 +73,31 @@ overview_server <- function(id) {
         textOutput(ns("overview2_text")),
         br(),
         
-        h2("Additional Session Resources"),
-        
-        textOutput(ns("session_overview_text")),
-        br(),
-        
-        tabsetPanel(type = "pills",
-                    tabPanel("Session #1", 
-                             br(),
-                             textOutput(ns("session1_text")),
-                             br(),
-                             tags$a(class = "links", href = "https://www.psrc.org/media/7768", "Equity Impact Assessment", tabindex="0", target = "_blank")
-                             ),
-                    tabPanel("Session #2", 
-                             textOutput(ns("session2_text"))
-                    ),
-                    tabPanel("Session #3", 
-                             textOutput(ns("session3_text"))
-                    ),
-                    tabPanel("Session #4", 
-                             textOutput(ns("session4_text"))
-                    )),
+        # h2("Additional Session Resources"),
+        # 
+        # textOutput(ns("session_overview_text")),
+        # br(),
+        # 
+        # # 
+        # 
+        # tabsetPanel(type = "pills",
+        #             tabPanel("Session #1", 
+        #                      br(),
+        #                      textOutput(ns("session1_text")),
+        #                      br(),
+        #                      tags$a(class = "links", href = "https://www.psrc.org/media/7768", "Equity Impact Assessment", tabindex="0", target = "_blank"),
+        #                      br(),
+        #                      tags$a(class = "links", href = "https://www.psrc.org/media/5123", "Vision 2050 Handout", tabindex="0", target = "_blank")
+        #                      ),
+        #             tabPanel("Session #2", 
+        #                      textOutput(ns("session2_text"))
+        #             ),
+        #             tabPanel("Session #3", 
+        #                      textOutput(ns("session3_text"))
+        #             ),
+        #             tabPanel("Session #4", 
+        #                      textOutput(ns("session4_text"))
+        #             )),
         
       )
     })
